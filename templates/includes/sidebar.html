@@ -1,7 +1,7 @@
 <ul class="sidebar-nav">
   {% if user.is_authenticated %}
       {% if user.driver %} {# Перевіряємо, чи є у цього користувача пов'язаний об'єкт Driver #}
-          <a href="{% url 'driver-detail' pk=user.pk %}">{{ user.username }}</a>
+          <a href="{% url 'taxi:driver-detail' pk=user.pk %}">{{ user.username }}</a>
       {% else %}
           <span>{{ user.username }}</span> {# Якщо це не водій, просто виводимо ім'я #}
       {% endif %}
