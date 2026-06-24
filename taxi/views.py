@@ -1,7 +1,6 @@
-from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.views import generic
 
 from .models import Driver, Car, Manufacturer
@@ -36,7 +35,7 @@ class ManufacturerListView(LoginRequiredMixin, generic.ListView):
 class CarListView(LoginRequiredMixin, generic.ListView):
     model = Car
     paginate_by = 5
-    queryset = Car.objects.select_related("manufacturer")
+    queryset = Car.objects.select_related("manufacturer").order_by("id")
 
 
 class CarDetailView(LoginRequiredMixin, generic.DetailView):
@@ -51,8 +50,3 @@ class DriverListView(LoginRequiredMixin, generic.ListView):
 class DriverDetailView(LoginRequiredMixin, generic.DetailView):
     model = Driver
     queryset = Driver.objects.prefetch_related("cars__manufacturer")
-
-
-def logout_view(request):
-    logout(request)
-    return render(request, "registration/logout.html")
